@@ -1,0 +1,10 @@
+[project]
+name = "fasthtml-routes-and-syntax-ws"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "monsterui>=1.0.21",
+    "python-fasthtml>=0.12.21",
+]
