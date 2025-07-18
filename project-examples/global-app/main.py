@@ -3,4 +3,4 @@ from globals import app
 import project_page
 import todo_page
 
-serve()
+serve(port=5004)

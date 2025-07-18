@@ -36,18 +36,29 @@ def _(mo):
     return
 
 
-@app.cell
-def _(P, show):
-    # Traditional if/else
-    is_logged_in = True
+@app.cell(hide_code=True)
+def _(mo):
+    is_logged_in_widget = mo.ui.checkbox(label="Is logged in")
+    is_logged_in_widget
+    return (is_logged_in_widget,)
 
-    if is_logged_in:
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## Standard If/Else""")
+    return
+
+
+@app.cell
+def _(P, is_logged_in_widget, show):
+    # Traditional if/else
+    if is_logged_in_widget.value:
         greeting = P("Welcome back!")
     else:
         greeting = P("Please log in")
 
     show(greeting)
-    return (is_logged_in,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -57,18 +68,25 @@ def _(mo):
 
 
 @app.cell
-def _(P, is_logged_in, show):
+def _(P, is_logged_in_widget, show):
     # Inline conditional
-    status = P("Welcome back!" if is_logged_in else "Please log in")
+    status = P("Welcome back!" if is_logged_in_widget.value else "Please log in")
 
     show(status)
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    score_slider = mo.ui.number(80)
+    score_slider
+    return (score_slider,)
+
+
 @app.cell
-def _(Span, show):
+def _(Span, score_slider, show):
     # Conditional styling
-    score = 50
+    score = score_slider.value
 
     grade_display = Span(
         f"Score: {score}",
@@ -86,9 +104,16 @@ def _(mo):
 
 
 @app.cell
-def _(Br, Form, Input, Label, show):
+def _(mo):
+    show_email_widget = mo.ui.checkbox(label='Show Email')
+    show_email_widget
+    return (show_email_widget,)
+
+
+@app.cell
+def _(Br, Form, Input, Label, show, show_email_widget):
     # Building form with conditional fields
-    show_email = True
+    show_email = show_email_widget.value
 
     form_fields = [
         Label("Name:"),
@@ -133,11 +158,6 @@ def _(Div, Span, show):
     badges = Div(*[status_badge(s) for s in statuses], cls='space-x-10')
 
     show(badges)
-    return
-
-
-@app.cell
-def _():
     return
 
 

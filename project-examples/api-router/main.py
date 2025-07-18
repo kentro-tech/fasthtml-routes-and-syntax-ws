@@ -9,4 +9,4 @@ from todo_page import ar as todo_ar
 project_ar.to_app(app)
 todo_ar.to_app(app)
 
-serve()
+serve(port=5002)
