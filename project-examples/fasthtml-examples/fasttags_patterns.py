@@ -8,7 +8,7 @@ app = marimo.App(width="medium")
 def _():
     import marimo as mo
     from fasthtml.common import Ul, Li, P, Div, Script, H1, H2, Strong, Span, Label, Input, Form, Br
-    return Br, Div, Form, Input, Label, Li, P, Script, Span, Strong, Ul, mo
+    return Br, Div, Form, H1, Input, Label, Li, P, Script, Span, Strong, Ul, mo
 
 
 @app.cell
@@ -16,6 +16,17 @@ def _(Div, Script, mo):
     def show(*c):
         return mo.Html(str(Div(Script(src="https://cdn.tailwindcss.com"),*c)))
     return (show,)
+
+
+@app.cell
+def _():
+    return
+
+
+@app.cell
+def _(Div, H1, P):
+    Div(H1("hello world"),P("Goodby world"))
+    return
 
 
 @app.cell(hide_code=True)
@@ -68,6 +79,19 @@ def _(mo):
 
 
 @app.cell
+def _(P):
+    def welcome_message(is_logged_in):
+        return P("Welcome back!" if is_logged_in else "Please log in")
+    return (welcome_message,)
+
+
+@app.cell
+def _(show, welcome_message):
+    show(welcome_message(False))
+    return
+
+
+@app.cell
 def _(P, is_logged_in_widget, show):
     # Inline conditional
     status = P("Welcome back!" if is_logged_in_widget.value else "Please log in")
@@ -80,14 +104,13 @@ def _(P, is_logged_in_widget, show):
 def _(mo):
     score_slider = mo.ui.number(80)
     score_slider
-    return (score_slider,)
+    return
 
 
 @app.cell
-def _(Span, score_slider, show):
+def _(Span, show):
     # Conditional styling
-    score = score_slider.value
-
+    score = 70
     grade_display = Span(
         f"Score: {score}",
         style=f"color: {'green' if score >= 70 else 'red'};"
